@@ -7,8 +7,7 @@ endif
 DEPENDS = \
 	pcre expat gettext sqlite3 libgpg-error \
 	libgcrypt bzip2 liblzo2 libzip freetype2 fontconfig \
-	openssl gmp nettle gnutls curl \
-	libjpeg-turbo libpng \
+	libressl curl libjpeg-turbo libpng \
 	libogg libvorbis libflac fribidi \
 	libass \
 	libmodplug librtmp libxml2 yajl libmicrohttpd mysql libffi \
@@ -20,7 +19,7 @@ DEPENDS = \
         libdvdread libdvdnav libdvdcss
 
 
-FFMPEG_DEPENDS = gnutls libdcadec
+FFMPEG_DEPENDS = libdcadec
 
 ifeq ($(ENABLE_GPLV3),yes)
   DEPENDS+=samba-gplv3 libcdio-gplv3
@@ -82,23 +81,21 @@ all: .installed-$(PLATFORM)
 gettext: $(ICONV)
 libgcrypt: libgpg-error
 fontconfig: freetype2 expat $(ICONV)
-curl: openssl
+curl: libressl
 libvorbis: libogg
 libflac: libogg gettext
 libass: fontconfig libpng freetype2 expat $(ICONV)
-librtmp: openssl
-libmicrohttpd: gnutls libgcrypt libgpg-error
-python27: expat gettext libxml2 sqlite3 openssl libffi
+librtmp: libressl
+libmicrohttpd: libgcrypt libgpg-error
+python27: expat gettext libxml2 sqlite3 libressl libffi
 libcdio: $(ICONV)
 libplist: libxml2 $(ZLIB)
 libbluray: $(ICONV) libxml2
-libssh: libgcrypt openssl $(ZLIB)
-mysql: openssl $(ZLIB)
+libssh: libgcrypt libressl $(ZLIB)
+mysql: libressl $(ZLIB)
 libzip: $(ZLIB)
 libpng: $(ZLIB)
-openssl: $(ZLIB)
-gnutls: nettle $(ZLIB)
-nettle: gmp
+libressl: $(ZLIB)
 pythonmodule-pil: $(ZLIB) libjpeg-turbo libpng freetype2 python27 pythonmodule-setuptools
 pythonmodule-setuptools: python27
 libsdl2: $(LINUX_SYSTEM_LIBS)
